@@ -1,0 +1,263 @@
+<template>
+    <section class="over-flow" style="overflow:visible">
+        <section class="side-bottom"></section>
+        <section class="container" >
+          <search-bar :type="1"></search-bar>
+          <div class="books-list toolbook">
+            <ul class="space-left">
+    
+                 <li v-for="(item,index) in orderControl" @click="setOrder(item,index)">{{item.title}}
+                    <span><img :src="item.state == 0 ? defaultImg:(item.state == 1 ?upOrderImg:downOrderImg)" style="width:0.14rem;height:0.16rem"></span>
+                  </li>
+            </ul>
+            <div class="tool">
+              <span @click="isTool = true" :class="{active:isTool}">工具书</span>
+              <span @click="isTool = false" :class="{active:!isTool}">手册</span>
+            </div>
+          </div>
+          <div class="newest-resource" style="padding-top: 0">
+            
+
+
+
+            <mt-loadmore 
+              :auto-fill="false" 
+              :bottom-method="loadBottom" 
+              :bottom-all-loaded="allLoaded"
+              bottomPullText="加载更多资源..."
+              bottomDropText="加载更多资源..."
+              ref="loadmore">
+                  <ul class="space-left" style="margin-top:0.6rem" v-for="(item,index) in dealLineNum(dataList,5)" v-if="dataList.length > 0">
+
+                    <li 
+                    v-for="(citem,cindex) in 5" 
+                    class="list-item" 
+                    v-if="dataList[index * 5 + cindex]" 
+                    @click="toNative(4,{id:dataList[index * 5 + cindex].Id,isExplicitWord:false})"
+                    :style="{marginLeft:cindex % 5 == 0 ? '0':'0.6rem'}"
+                    >
+                      <section class="figure-section">
+                         <figure :style="{background:'url('+bgImg(dataList[index * 5 + cindex])+')',backgroundSize:'cover',backgroundRepeat:'no-repeat',backgroundPosition:'center'}">
+                           <img :src="getImgByType(dataList[index * 5 + cindex])" alt="">
+                         </figure>
+                       </section>
+
+                       <p v-if="trim(dataList[index * 5 + cindex].Title).length > 10" class="two-line" style="line-height: .4rem;marginTop:0.05rem">{{dataList[index * 5 + cindex].Title}}</p>
+                       <p v-else class="one-line" style="line-height: .8rem;marginTop:0.05rem">{{dataList[index * 5 + cindex].Title}}</p>
+
+                       <p><span>¥ {{dataList[index * 5 + cindex].CurrentPrice.toFixed(2)}}</span></p>
+                    </li>
+                  </ul>
+              </mt-loadmore>
+
+
+
+
+            <div class="no-data-text" v-show="isNoDataShow">
+              <img src="../assets/images/common/kc_ic_no_data.png" alt="">
+              <span>
+                暂无相关数据
+              </span>
+            </div>
+          </div>
+
+          
+        </section>
+    </section>
+</template>
+
+<script>
+import searchBar from './common/searchBar.vue';
+import { Indicator } from 'mint-ui';
+export default {
+  name: '',
+  data () {
+    return {
+      isTool:true,
+      orderControl:[
+      {
+        title:'销量',
+        state:0, //默认  1 - 升序  -1 - 降序
+        order:''
+      },
+      {
+        title:'价格',
+        state:0, //默认  1 - 升序  -1 - 降序
+        order:'currentPrice'
+      },
+      {
+        title:'上架时间',
+        state:0, //默认  1 - 升序  -1 - 降序
+        order:'onShelfDate'
+      },
+      {
+        title:'出版时间',
+        state:0, //默认  1 - 升序  -1 - 降序
+        order:'出版时间publishDate'
+      },
+      {
+        title:'阅读量',
+        state:0, //默认  1 - 升序  -1 - 降序
+        order:'readCount'
+      }],
+
+      keyword:this.$route.query.keyword,
+      order:'',   //价格 currentPrice  上架时间  onShelfDate  出版时间publishDate 阅读量 readCount
+      desc:true, //倒序排列
+      objectType:'',
+
+      dataList:[],
+      dataRecord:0,
+
+      isNoDataShow:false,
+      cp:1,
+      ps:10,
+
+      allLoaded:false,
+    }
+  },
+  components:{
+    'search-bar':searchBar
+  },
+  methods:{
+    loadBottom() {
+      // 加载更多数据
+      // this.allLoaded = true;// 若数据已全部获取完毕
+      this.cp ++;
+      this.getDataByKeyword(this.cp,true);
+    },
+    /**
+     * [setOrder 设置排序规则]
+     * @Author   罗文
+     * @DateTime 2017-12-21
+     */
+    setOrder(item,index) {
+       let state = item.state;
+       this.orderControl.forEach((citem,cindex)=>{
+          citem.state = 0;
+       })
+       
+       if(index == 0) {
+          if(state == 0) {
+              item.state = -1;
+           }else {
+              item.state = 0;
+           }
+       }else {
+           if(state == 0) {
+              item.state = -1;
+           }else if(state == -1) {
+              item.state = 1;
+           }else if(state = 1) {
+              item.state = 0;
+           }
+       }
+
+      this.getDataByKeyword();
+    },
+    
+    /**
+     * [handleCommandCarrier 载体]
+     * @Author   罗文
+     * @DateTime 2017-12-21
+     * @return   {[type]}   [description]
+     */
+    handleCommandCarrier() {
+       
+    },
+    
+    /**
+     * [handleCommandType 类型]
+     * @Author   罗文
+     * @DateTime 2017-12-21
+     * @return   {[type]}   [description]
+     */
+    handleCommandType(command) {
+       this.objectType = command;
+       this.getDataByKeyword();
+    },
+
+    getDataByKeyword(cp = 1,isLoadMore = false) {
+      this.isNoDataShow = false;
+      Indicator.open({
+        text: '加载中...',
+        spinnerType: 'fading-circle'
+      });
+
+
+      // if(keyword) this.keyword = keyword;
+      
+      //处理排序规则
+      this.order = '';
+      this.desc = true;
+      this.orderControl.forEach((citem,cindex)=>{
+          if(citem.state != 0) {
+             this.order = citem.order;
+             this.desc = citem.state == -1 ? true : false;
+          }
+       })
+
+      //处理类型
+      let typeArr = [];
+      if(this.objectType !== '') typeArr = [this.objectType];
+        this.$http.post("/Content/Search", {
+           query:JSON.stringify({
+              SearchOrderBy:{
+                ColumnName:this.order,
+                Descending:this.desc
+              },
+              keyword:this.keyword,
+              objectTypes:[104],
+           }),
+           ps:this.ps,
+           cp:cp,
+        })
+        .then((res) => {
+          if (res.data.Code == 200) {
+            if(isLoadMore) {
+              this.dataList.push(...res.data.Data.ItemList);
+              this.$refs.loadmore.onBottomLoaded();
+            }else {
+              this.dataList = [];
+              this.cp = 1;
+              this.$nextTick(()=>{
+                this.dataList = res.data.Data.ItemList;
+              })
+
+              this.dataRecord = res.data.Data.RecordCount;
+              if(res.data.Data.ItemList.length < this.ps) this.allLoaded = true;
+              if(res.data.Data.ItemList.length == 0) this.isNoDataShow = true;
+            }
+          }else{
+            // alert(res.data.Description);
+          }
+
+          Indicator.close();
+        })
+    }
+  },
+
+   created() {
+     Indicator.open({
+        text: '加载中...',
+        spinnerType: 'fading-circle'
+      });
+   },
+
+  mounted() {
+    this.getDataByKeyword();
+  },
+
+
+  watch:{
+    'isTool':function(nv) {
+       this.getDataByKeyword();
+    }
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="less">
+
+</style>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<!--    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>建工APP</title>
+    <script src="./static/js/auto-size.js"></script>
+  </head>
+  <body>
+
+    <div id="app"></div>
+
+
+    <button id="toUserCenter" style="display: none;">去用户中心</button>
+    <button id="toShoppingCar" style="display: none;">去购物车</button>
+    <button id="torichScan" style="display: none;">去扫一扫</button>
+    <button id="toDetail"  data-id='' style="display: none;">去详情</button>
+    <button id="showHeaderBar" style="display: none;">显示顶部条</button>
+    <button id="openProduct" data-productId='' style="display: none;">打开I施工</button>
+    <button id="hideLoadingView" style="display: none;">关闭loading动画</button>
+    <button id="saveTokenInfo" data-devicetoken=''  data-accessToken='' data-appVersion='' style="display: none;"></button>
+    
+
+    <script src="./static/js/eruda.min.js"></script>
+    <script>eruda.init();</script>
+
+
+    <script type="text/javascript">
+      var u = navigator.userAgent;
+      var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    </script>
+
+
+    <script>
+
+      /**
+       * [setSearchKey 挂载一个方法用于native给Vue组件内部传递keyword，搜索列表]
+       * @Author   罗文
+       * @DateTime 2017-12-17
+       * @param    {Object}   searchOptions [搜索配置项，包括keyword 和 type 1 - 资源  2 - 知识元]
+       */
+    function setSearchKey(searchOptions) {
+      var component = $vm.$children[0].$children[0];
+      component.getDataByKeyword(searchOptions.searchContent);
+    }
+
+
+    /**
+       * [clearStorage 退出时清空用户数据]
+       * @Author   罗文
+       * @DateTime 2017-12-17
+       */
+    function clearStorage() {
+      console.log('清除本地数据')
+       // document.getElementById("saveTokenInfo").setAttribute('data-devicetoken', '');
+       document.getElementById("saveTokenInfo").setAttribute('data-accesstoken', '');
+       document.getElementById("saveTokenInfo").setAttribute('data-appversion', '');
+    }
+
+   
+
+   //根据平台注册事件
+   if(isAndroid) {
+      //这里是安卓系统的
+      function connectWebViewJavascriptBridge(callback) {
+          if (window.WebViewJavascriptBridge) {
+              callback(`WebViewJavascriptBridge`)
+          } else {
+              document.addEventListener(
+                  'WebViewJavascriptBridgeReady'
+                  , function() {
+                      callback(WebViewJavascriptBridge)
+                  },
+                  false
+              );
+          }
+      }
+
+      connectWebViewJavascriptBridge(function(bridge) {
+          bridge.init(function(message, responseCallback) {
+              
+              console.log('JS got a message', message);
+              var data = {
+                  'Javascript Responds': '测试中文!'
+              };
+              console.log('JS responding with', data);
+              responseCallback(data);
+          });
+          
+
+          /**
+         * [functionInJs 挂载一个方法用于native给Vue组件内部传递keyword，搜索列表]
+         * @Author   罗文
+         * @DateTime 2017-12-17
+         * @param    {String}   data [搜索关键字,由安卓传入]
+         * @param    {Function}   responseCallback [回调返回给安卓的消息，可以是常规数据类型和json字符串]
+         */
+          bridge.registerHandler("setSearchKey", function(data, responseCallback) {
+              setSearchKey(data);
+          });
+
+          //清除本地设备和用户数据
+          bridge.registerHandler("clearStorage", function() {
+              clearStorage();
+          });
+      })
+
+
+      //关闭loading动画
+      document.addEventListener('DOMContentLoaded', function() {
+        closeLoading();
+        
+        function closeLoading() {
+          if(window.WebViewJavascriptBridge) {
+            document.getElementById("hideLoadingView").click();
+          }else {
+            setTimeout(function() {
+               closeLoading()
+            },300)
+          }
+        }
+        
+      }, false)
+
+      //获取设备信息
+      window.onload = function() {
+         document.getElementById("hideLoadingView").click();
+         document.getElementById("saveTokenInfo").click();
+      }
+
+
+      //跳转到用户个人中心
+      document.getElementById("toUserCenter").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'toUserCenter'
+            , {'path': '个人中心'}
+            , function(responseData) {
+                console.log(responseData)
+            }
+        );
+      }
+
+      //跳转到购物车
+      document.getElementById("toShoppingCar").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'toShoppingCar'
+            , {'path': '购物车'}
+            , function(responseData) {
+                console.log(responseData)
+            }
+        );
+      }
+
+      //跳转到扫一扫
+      document.getElementById("torichScan").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'torichScan'
+            , {'path': '扫一扫'}
+            , function(responseData) {
+                console.log(responseData)
+            }
+        );
+      }
+
+      //跳转到资源详情
+      document.getElementById("toDetail").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'toDetail'
+            , JSON.parse(document.getElementById("toDetail").getAttribute('data-options'))
+            , function(responseData) {
+                console.log(responseData)
+            }
+        );
+      }
+
+      //显示顶部条
+      document.getElementById("showHeaderBar").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'showHeaderBar'
+            , {'path': '显示顶部条'}
+            , function(responseData) {
+                console.log(responseData)
+            }
+        );
+      }
+
+      //打开子产品
+      document.getElementById("openProduct").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'openProduct'
+            , {'productId': document.getElementById("openProduct").getAttribute('data-productId')}
+            , function(responseData) {
+                console.log(responseData)
+            }
+        );
+      }
+
+      // //关闭loading动画
+      document.getElementById("hideLoadingView").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'hideLoadingView'
+            , {}
+            , function(responseData) {
+                console.log(responseData)
+            }
+        );
+      }
+
+      //获取设备信息和用户信息
+      document.getElementById("saveTokenInfo").onclick = function(e){
+         e.preventDefault();
+         window.WebViewJavascriptBridge.callHandler(
+            'getTokenInfo'
+            , {}
+            , function(responseData) {
+                if(responseData == '') return;
+
+                responseData = JSON.parse(responseData);
+                                                                                                                                                                                         
+                document.getElementById("saveTokenInfo").setAttribute('data-devicetoken', responseData.deviceToken);
+                document.getElementById("saveTokenInfo").setAttribute('data-accesstoken', responseData.accessToken);
+                document.getElementById("saveTokenInfo").setAttribute('data-appversion', responseData.appVersion);
+            }
+        );
+      }
+
+
+      
+      
+
+
+   }else if(isiOS) {
+      //这里是IOS的
+      function setupWebViewJavascriptBridge(callback) {
+          if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+          if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+          window.WVJBCallbacks = [callback];
+          var WVJBIframe = document.createElement('iframe');
+          WVJBIframe.style.display = 'none';
+          WVJBIframe.src = 'https://__bridge_loaded__';
+          document.documentElement.appendChild(WVJBIframe);
+          setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+      }
+      
+      setupWebViewJavascriptBridge(function(bridge) {
+          bridge.registerHandler('testJavascriptHandler', function(data, responseCallback) {
+            setSearchKey(data);
+            // var responseData = { 'Javascript Says':'Right back atcha!' }
+            // responseCallback(responseData)
+          })
+
+          //跳转到用户个人中心
+          document.getElementById("toUserCenter").onclick = function(e){
+             e.preventDefault();
+             bridge.callHandler('toUserCenter', {'path': '个人中心'} , function(response) {
+                console.log(responseData)
+             })
+          }
+
+          //跳转到购物车
+          document.getElementById("toShoppingCar").onclick = function(e){
+             e.preventDefault();
+             bridge.callHandler('toShoppingCar', {'path': '购物车'} , function(response) {
+                console.log(responseData)
+             })
+          }
+
+          //跳转到扫一扫
+          document.getElementById("torichScan").onclick = function(e){
+             e.preventDefault();
+             bridge.callHandler('torichScan', {'path': '扫一扫'} , function(response) {
+                console.log(responseData)
+             })
+          }
+
+          //跳转到资源详情
+          document.getElementById("toDetail").onclick = function(e){
+             e.preventDefault();
+             bridge.callHandler('toDetail', JSON.parse(document.getElementById("toDetail").getAttribute('data-options')) , function(response) {
+                console.log(responseData)
+             })
+          }
+
+          //显示顶部条
+          document.getElementById("showHeaderBar").onclick = function(e){
+             e.preventDefault();
+             bridge.callHandler('showHeaderBar', {'path': '显示顶部条'} , function(response) {
+                console.log(responseData)
+             })
+          }
+
+          //打开子产品
+          document.getElementById("openProduct").onclick = function(e){
+             e.preventDefault();
+             bridge.callHandler('openProduct', {'productId': document.getElementById("openProduct").getAttribute('data-productId')} , function(response) {
+                console.log(responseData)
+             })
+          }
+
+          //获取设备信息和用户信息
+          document.getElementById("saveTokenInfo").onclick = function(e){
+             e.preventDefault();
+             bridge.callHandler('getTokenInfo', {} , function(responseData) {
+                document.getElementById("saveTokenInfo").setAttribute('data-devicetoken', responseData.deviceToken);
+                document.getElementById("saveTokenInfo").setAttribute('data-accesstoken', responseData.accessToken);
+             })
+          }
+
+
+       })
+
+
+   }
+
+    </script>
+
+  </body>
+</html>

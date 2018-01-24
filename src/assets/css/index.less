@@ -1,0 +1,434 @@
+@fs:0.3rem;
+//预设样式
+@primary:#1587E0;
+
+
+
+// 预设类
+.pr() {
+	position: relative;
+	left: 0;
+	top: 0;
+}
+
+.pa(@left,@top) {
+	position: absolute;
+	left: @left;
+	top: @top;
+}
+
+.pf() {
+	position: fixed;
+   	bottom: 0;
+   	left: 0;
+}
+
+.flex(@arrow) {
+    display: flex;
+ 	justify-content: @arrow;
+ 	align-items: center;
+}
+
+
+input[placeholder], [placeholder], *[placeholder] {
+   color:#666 !important;
+}
+
+figure {
+	margin: 0 !important;
+	padding: 0 !important;
+	// position: relative;
+}
+
+.new-resource figure {
+	position: relative;
+}
+
+.new-resource figure span {
+   display: block;
+	width: .5rem;
+	height: .6rem;
+	position: absolute;
+	top: .12rem;
+	left: .1rem;
+	img {
+		width: 100% !important;
+		height: 100% !important;
+	}
+}
+.mc() {
+	margin: 0 auto;
+}
+
+.box() {
+	margin: 0 auto;
+	height: 6.5rem;
+	width: 19.8rem;
+}
+
+.container {
+   width:100%;
+   background: white;
+   position: relative;
+   header {
+     background: transparent;
+   };
+// is-active
+	header  .mint-swipe-indicator {
+		height: 0.08rem !important;
+        width: 0.43rem !important;
+        background: #a4afa5 !important;
+        border-radius: 0.04rem !important;
+	}
+
+	header  .is-active {
+		background: #fff !important;
+	}
+   &>header {
+   	 height: 4.36rem;
+   	 width: 100%;
+   };
+
+   .header {
+   	 .pa(0,0.67rem);
+   	 display: flex;
+   	 justify-content: flex-start;
+   	 align-items: center;
+   	 z-index: 999;
+     width: 100%;
+     height: 0.6rem;
+     .logo {
+	   	 display: flex;
+	   	 justify-content: center;
+	   	 align-items: center;
+	   	 color:white;
+     	 /*position: relative;*/
+	   	 img {
+	   	 	width:.5rem;
+	   	 	height: .5rem;
+	   	 }
+	   	 img:nth-of-type(1) {
+	   	 	margin-left: .2rem;
+	   	 }
+	   	 img:nth-of-type(2) {
+	   	 	position: absolute;
+	   	 	right: 5.64rem;
+	   	 }
+	   	 img:nth-of-type(3) {
+	   	 	position: absolute;
+	   	 	right: .32rem;
+	   	 }
+
+	   	 img:nth-of-type(4) {
+	         position: absolute;
+	         z-index: 2;
+	         right: 7rem ;
+	         width: 0.4rem !important;
+	         height: 0.4rem !important;
+	       }
+	   }
+
+	  .input {
+	  	.pa(50%,0);
+	  	margin-left: -3.5rem ;
+	  	width: 7rem;
+	  	height: 100%;
+        select {
+            float: left;
+            .pr();
+            z-index: 999;
+	    	width: 1rem;
+	    	height: 100%;
+	    	background: transparent;
+	    	border: none;
+            color:white;
+            margin-right: -1.5rem;
+            margin-left: 0.3rem;
+            margin-top: 0.02rem;
+            outline: none;
+            border: none;
+            appearance:none;
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			// background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;
+			// padding-right: 0.5rem;
+
+			option {
+				padding: 0;
+			    margin:0;
+			    float:left;
+			    height: 26px;
+			    padding: 10px 0;/*当时解决输入框光标顶满input框的问题是这么解决的 如果设置了行高就会顶满没有行高的话光标高度=文字的font-size */
+			    border: none;
+			    outline: none;
+			    padding-left: 20px;
+			    color:#6d6d6d;
+			    -webkit-appearance:none; /*去除系统默认的样式*/
+			    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);   /* 点击去除高亮的颜色*/
+			    background-color: #fff;/*当input框禁止输入的时候会有一个灰色的底色 */
+			}
+	    }
+
+	    input {
+	    	float: left; 
+	    	width: 100%;
+	    	height: 100%;
+	    	background: #ddd;
+	    	opacity: 0.5;
+	    	border-radius: 0.3rem;
+	    	outline: none;
+            padding-left: 1.4rem;
+            padding-top: 0.05rem;
+            // color:white;
+	    }
+
+	     ::-webkit-input-placeholder { /* WebKit browsers */ color:#000; } 
+
+
+	  }  
+   }
+}
+.index-nav {
+	width: 100%;
+	height: 2.83rem;
+	display: flex;
+	align-items: center;
+
+	ul {
+		display: flex;
+		justify-content: space-between;
+		margin: 0 auto;
+		width: 15.66rem;
+		height: 2rem;
+		li {
+			width: 1.56rem;
+			height: 100%;
+            /*margin: 0 0.7rem;*/
+            text-align: center;
+            display: flex;
+		    justify-content: center;
+		    flex-direction: column;
+		    align-items: center;
+		    font-size: .32rem;
+            img {
+           	  width: 1.56rem;
+           	  height: 1.56rem;
+            }
+		}
+	}
+}
+
+.new-resource {
+	width: 100%;
+	height: 8.6rem;
+	background: #f2f2f2;
+	position: relative;
+	overflow: hidden;
+	& > img {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	& > p {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		height: 1rem;
+		line-height: 1rem;
+		text-align: center;
+		font-size: 0.43rem;
+		margin-top: 0.5rem;
+	}
+
+	.new-resource-content {
+		position: relative;
+		z-index: 1;
+		.box();
+		background: white;
+        & > p {
+           display: flex;
+           justify-content: flex-end;
+           align-items: center;
+           font-size: @fs ;
+           height: 0.7rem;
+           line-height: 0.7rem;
+           width: 100%;
+           overflow: hidden;
+           color:#666;
+           & > img {
+           	 width: @fs/2;
+           	 height: 0.28rem;
+           	 margin-right: 0.3rem;
+           	 margin-left: 0.15rem;
+           }
+        }
+
+        div {
+        	.mc();
+           width: 19.2rem;
+           height: 5.38rem;
+           /*background: red;*/
+           overflow: hidden;
+           ul {
+	           width: 19.2rem;
+	           height: 100%;
+	           background: white;
+	           display: flex;
+	           justify-content: flex-start;
+
+	        }
+        }
+
+       .lunbo-india {
+       	 height: .4rem;
+       	 width: 100%;
+       	 display: flex;
+   	 	 justify-content: flex-end;
+   	 	 align-items: center;
+       	 ul {
+       	 	display: flex;
+       	 	justify-content: space-around;
+       	 	align-items: center;
+       	 	width: 1.95rem;
+       	 	height: 100%;
+       	 	margin-right: 0.3rem;
+       	 	li {
+       	 		width: 0.2rem;
+       	 		height: 0.2rem;
+       	 		border: 0.01rem solid #aaa;
+       	 		border-radius: 50%;
+       	 		margin-left: 0;
+       	 	}
+
+       	 	.avtive {
+       	 		background: #e71515;
+       	 		border: none;
+       	 	}
+       	 }
+       };
+
+       .hangye-recom {
+          justify-content: center;
+       }
+       .hangye-recom-title {
+       	  height: 1.1rem;
+       }
+
+       h3 {
+       	position: absolute;
+       	left: 0;
+       	top: 0;
+       	margin: 0.35rem 0 0 0.5rem;
+       	font-size: @fs+0.03;
+       }
+	}
+}
+
+.hot-relate {
+	width: 100%;
+	height: 7.1rem;
+	overflow: hidden;
+	background: #f2f2f2;
+	.hot-relate-cont {
+	   .box();
+	   background: white;
+	   .hot-relate-exp {
+	   	 .mc();
+	   	 width: 80%;
+	   	 height: 4.68rem;
+	   	 overflow: hidden;
+
+	   	 & > ul {
+		     display: flex;
+		     justify-content: flex-start;
+		     flex-wrap: wrap;
+		     align-items: center;
+		     li {
+		      position: relative;
+		      margin:0.05rem 0.5rem;
+		      cursor: pointer;
+		      padding: 0.05rem 0.08rem;
+		      transition: all 0.5s;
+		     }
+		   }
+	   }
+	}
+}
+
+.section-title {
+	width: 19.2rem;
+	height: 1.33rem;
+	.mc();
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 0.4rem;
+	position: relative;
+	span {
+		display: inline-block;
+		margin: 0 0.55rem;
+		width: 0.5rem;
+		height: 0.03rem;
+		background: #e71515;
+	}
+
+	i,img {
+		position: absolute;
+    	right: 0;
+    	top: 50%;
+    	margin-top: -0.16rem;
+    	font-size: @fs;
+    	font-style: normal;
+	}
+
+	& > i {
+        right: 0.68rem;
+        margin-top: -0.21rem;
+        color:#666
+	}
+
+	& > img {
+       	 width: @fs/2;
+       	 height: @fs;
+       	 right: 0.34rem;
+       	 /*margin-right: 0.3rem;*/
+       	 /*margin-left: 0.15rem;*/
+       }
+
+}
+
+
+.pro-apps {
+	.mc();
+	width: 16.66rem;
+	height: 5.15rem;
+	.item {
+		width: 100%;
+		height: 4.15rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		li {
+			width: 5.2rem;
+			height: 4.15rem;
+			figure {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				height: 3.23rem;
+			    border: 0.01rem solid #bababa;
+			}
+
+			p {
+				height: 0.9rem;
+				width: 100%;
+				line-height: 0.9rem;
+				font-size: @fs;
+			}
+		}
+	}
+}

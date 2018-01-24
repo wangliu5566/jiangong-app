@@ -1,0 +1,324 @@
+// 产品推荐样式
+.proRecommend {
+	& > ul {
+		float: left;
+		width: 4.72rem;
+		& > li {
+			box-sizing: border-box;
+			padding: .46rem 1.07rem .4rem;
+			width: 100%;
+			height: 3.01rem;
+			& > div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 2.8rem;
+				height: 1.72rem;
+				border: .01rem solid #bababa;
+				& > img {
+					display: block;
+					width: 1.22rem;
+				}
+			}
+			& > p {
+				padding-top: .18rem;
+				font-size: .28rem;
+			}
+		}
+	}
+	& > div {
+		margin-left: 4.92rem;
+		padding: .5rem .84rem 0 .57rem;
+		& > .right-top {
+			height: 3.2rem;
+			& > div:nth-of-type(1) {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-right: .72rem;
+				float: left;
+				width: 5.2rem;
+				height: 3.2rem;
+				border: .01rem solid #d1d1d1;
+				& > img {
+					width: 2.26rem;
+				}
+			}
+			& > div:nth-of-type(2) {
+				float: left;
+				& > p:nth-of-type(1) {
+					padding-top: 1.04rem;
+					font-size: .34rem;
+					font-weight: bolder;
+				}
+				& > p:nth-of-type(2) {
+					margin-top: .3rem;
+				}
+			}
+			& > button {
+				margin-top: 1.28rem;
+				float: right;
+				width: 2.1rem;
+				height: .64rem;
+				background: #2672c0;
+				color: #fff;
+				cursor: pointer;
+				box-sizing: border-box;
+				border: none;
+				outline: none;
+				border-radius: .05rem;
+			}
+		}
+		& > .right-bottom {
+			margin-top: .7rem;
+			& > div:nth-of-type(1) {
+				width: 1rem;
+			}
+			& > div:nth-of-type(2) {
+				// width: 13.2rem;
+			}
+		}
+	}
+
+	.pro-abs-cont {
+		font-size: 0.32rem;
+		div {
+			float:left;
+		};
+
+		.pro-abstracts {
+			margin-top: -0.05rem;
+			width: 13.1rem;
+			min-height: 6rem;
+			text-indent: 0.6rem;
+			line-height: 0.6rem;
+			color:#666
+		}
+	}
+
+	
+}
+// 产品推荐  弹框样式
+.pop-up-box {
+	    
+		button:last-child {
+			width: 6.02rem;
+			height: .65rem;
+			line-height: .65rem;
+			text-align: center;
+			border: none;
+			border-radius: .05rem;
+			background: #2672c0;
+			color: #fff;
+			outline: none;
+		}
+
+		.dia-body {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+
+			img:nth-of-type(1) {
+	           width: 1.37rem;
+	           height: 1.37rem;
+	           position: absolute;
+	           left: 50%;
+	           top: -2rem;
+	           margin-left: -0.685rem;
+		    };
+
+		    img:nth-of-type(2) {
+	           margin-bottom: 1.2rem;
+	           margin-top: 0.4rem;
+		    };
+		}
+	// }
+}
+
+// 工具书-手册列表 样式
+.toolbook {
+	padding: .46rem 1.16rem 0;
+	.tool {
+		span {
+			display: inline-block;
+			width: 1.5rem;
+			height: .54rem;
+			text-align: center;
+			line-height: .54rem;
+			cursor: pointer;
+			border: .01rem solid #2672c0;
+		}
+		span:last-child {
+			margin-left: -.08rem;
+		}
+		.active {
+			background: #2672c0;
+			color: #fff;
+		}
+
+
+	}
+
+}
+
+
+/*公共样式:两端对齐*/
+.space-between {
+	display: flex;
+	justify-content: space-between;
+	/*align-items: center;*/
+}
+
+.space-between:not(.space-title-index) {
+	margin-bottom: 0.65rem
+}
+/*公共样式:左对齐*/
+.space-left {
+	display: flex;
+	justify-content: flex-start;
+	/*align-items: center;*/
+}
+
+.four-col-margin {
+    margin-left: 0.1rem;
+}
+
+/*公共样式:中心对齐*/
+.space-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+
+//建筑规范样式
+.build-standard {
+	padding: .46rem .52rem;
+	ul:first-child {
+		margin-top: 0;
+	}
+	ul {
+		margin-top: .6rem;
+		li {
+			& > div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 3.15rem;
+				height: 4.11rem;
+				position: relative;
+				& > img {
+					width: 100%;
+				}
+				& > span {
+					display: block;
+					width: .5rem;
+					height: .6rem;
+					position: absolute;
+					top: .12rem;
+					left: .1rem;
+					& > img {
+						width: 100%;
+					}
+				}
+			}
+/*			p:nth-of-type(1) {
+				margin-top: .2rem;
+				width: 3.3rem;
+				height: .7rem;
+				line-height: .35rem;
+			}*/
+			p > span {
+				color: #e71515;
+			}
+		}
+	}
+
+}
+
+
+/*图书列表样式*/
+.books-list {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	& > ul > li {
+		margin-left: .94rem;
+	}
+	& > ul > li:first-child {
+		margin-left: 0;
+	}
+	.zaiti {
+		width: 1.3rem;
+		position: relative;
+		& > img {
+			margin-left: .15rem;
+			position: absolute;
+			top: .15rem;
+			/*left: .15rem;*/
+		}
+		& > span {
+
+		}
+	}
+
+	.pro-types {
+		width: 2rem;
+		margin-right: -2.2rem;
+	}
+}
+
+
+/*最新资源样式*/
+.newest-resource {
+	padding: .36rem 1.16rem;
+	& > div {
+		& > ul {
+			width: 9.26rem;
+			li {
+				width: 25%;
+				text-align: center;
+				position: relative;
+				cursor: pointer;
+			}
+			.active {
+				color: #e71515;
+			}
+		}
+	}
+	& > ul {
+		margin-top: .6rem;
+		li {
+			& > div {
+				width: 3.15rem;
+				height: 4.11rem;
+				position: relative;
+				& > img {
+					width: 100%;
+				}
+				& > span {
+					display: block;
+					width: .5rem;
+					height: .6rem;
+					position: absolute;
+					top: .12rem;
+					left: .1rem;
+					& > img {
+						width: 100%;
+					}
+				}
+			}
+/*			p:nth-of-type(1) {
+				margin-top: .2rem;
+				width: 3.3rem;
+				height: .7rem;
+				line-height: .35rem;
+			}
+			p > span {
+				color: #e71515;
+			}*/
+		}
+	}
+}

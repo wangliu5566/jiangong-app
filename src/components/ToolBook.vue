@@ -128,7 +128,7 @@ export default {
     },
     /**
      * [setOrder 设置排序规则]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-21
      */
     setOrder(item,index) {
@@ -158,7 +158,7 @@ export default {
     
     /**
      * [handleCommandCarrier 载体]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-21
      * @return   {[type]}   [description]
      */
@@ -168,7 +168,7 @@ export default {
     
     /**
      * [handleCommandType 类型]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-21
      * @return   {[type]}   [description]
      */

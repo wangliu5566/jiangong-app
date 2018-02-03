@@ -174,7 +174,7 @@ export default {
     },
     /**
      * [setOrder 设置排序规则]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-21
      */
     setOrder(item,index) {
@@ -205,7 +205,7 @@ export default {
     
     /**
      * [handleCommandCarrier 载体]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-21
      * @return   {[type]}   [description]
      */
@@ -216,7 +216,7 @@ export default {
     
     /**
      * [handleCommandType 类型]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-21
      * @return   {[type]}   [description]
      */
@@ -232,7 +232,7 @@ export default {
     
     /**
      * [getDataByKeyword 查询资源]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-24
      * @param    {[type]}   keyword [description]
      * @param    {[type]}   type    [description]
@@ -306,7 +306,7 @@ export default {
 
     /**
      * [getCategoryByGroupName 获取分类下数据]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-24
      * @return   {[type]}   [description]
      */
@@ -337,7 +337,7 @@ export default {
 
     /**
      * [getChildList 获取侧边栏的子级菜单]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-24
      * @param    {[type]}   index [description]
      * @return   {[type]}         [description]

@@ -132,7 +132,7 @@ export default {
     },
     /**
      * [getListByNewIndex 根据最新的索引获取数据]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-21
      * @return   {[type]}   [description]
      */

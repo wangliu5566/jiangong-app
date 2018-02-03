@@ -265,7 +265,7 @@ export default {
     
     /**
      * [handleChangeProfesserTitle 手动切换行业名]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-25
      * @param    {[type]}   index [description]
      * @return   {[type]}         [description]
@@ -295,7 +295,7 @@ export default {
     
     /**
      * [getNewestList 获取最新资源]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-17
      * @return   {[type]}   [description]
      */
@@ -323,7 +323,7 @@ export default {
 
      /**
      * [getNewestList 获取最新资源]
-     * @Author   罗文
+     * @Author   王柳
      * @DateTime 2017-12-17
      * @return   {[type]}   [description]
      */
